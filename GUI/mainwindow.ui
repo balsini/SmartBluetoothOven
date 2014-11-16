@@ -26,7 +26,7 @@
    <string>SmartBluetoothOven</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>289</x>
@@ -35,9 +35,9 @@
       <height>341</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout_3">
+    <layout class="QVBoxLayout" name="verticalLayoutRight">
      <item>
-      <widget class="QLabel" name="label_4">
+      <widget class="QLabel" name="labelTemperatureProfile">
        <property name="text">
         <string>Temperature Profile</string>
        </property>
@@ -52,7 +52,7 @@
      <item>
       <widget class="QProgressBar" name="progressBar">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="value">
         <number>100</number>
@@ -62,14 +62,14 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="buttonStart">
          <property name="text">
           <string>Start</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_2">
+        <widget class="QPushButton" name="buttonStop">
          <property name="text">
           <string>Stop</string>
          </property>
@@ -79,7 +79,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget1">
     <property name="geometry">
      <rect>
       <x>9</x>
@@ -88,12 +88,12 @@
       <height>341</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0,0">
+    <layout class="QVBoxLayout" name="verticalLayoutLeft" stretch="0,0,0,0,0">
      <property name="sizeConstraint">
       <enum>QLayout::SetDefaultConstraint</enum>
      </property>
      <item>
-      <widget class="QLabel" name="label_3">
+      <widget class="QLabel" name="labelDots">
        <property name="text">
         <string>Dots</string>
        </property>
@@ -103,24 +103,24 @@
       </widget>
      </item>
      <item>
-      <widget class="QListWidget" name="listWidget"/>
+      <widget class="QListWidget" name="listDots"/>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_3">
+      <widget class="QPushButton" name="buttonDotNew">
        <property name="text">
         <string>New</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_4">
+      <widget class="QPushButton" name="buttonDotDuplicate">
        <property name="text">
         <string>Duplicate</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_5">
+      <widget class="QPushButton" name="buttonDotRemove">
        <property name="text">
         <string>Remove</string>
        </property>
@@ -128,7 +128,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget2">
     <property name="geometry">
      <rect>
       <x>120</x>
@@ -137,9 +137,9 @@
       <height>341</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
+    <layout class="QVBoxLayout" name="verticalLayoutMiddle">
      <item>
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="labelTemperature">
        <property name="text">
         <string>Temperature (°C)</string>
        </property>
@@ -149,7 +149,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QDial" name="dial">
+      <widget class="QDial" name="dialTemperature">
        <property name="minimum">
         <number>25</number>
        </property>
@@ -162,7 +162,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QSpinBox" name="spinBox">
+      <widget class="QSpinBox" name="spinBoxTemperature">
        <property name="alignment">
         <set>Qt::AlignCenter</set>
        </property>
@@ -178,7 +178,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="labelTime">
        <property name="text">
         <string>Time (h:mm:ss)</string>
        </property>
@@ -188,7 +188,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QDial" name="dial_2">
+      <widget class="QDial" name="dialTime">
        <property name="minimum">
         <number>0</number>
        </property>
@@ -201,7 +201,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QTimeEdit" name="timeEdit">
+      <widget class="QTimeEdit" name="timeEditTime">
        <property name="dateTime">
         <datetime>
          <hour>0</hour>
@@ -305,46 +305,46 @@
  <resources/>
  <connections>
   <connection>
-   <sender>dial</sender>
+   <sender>dialTemperature</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>spinBox</receiver>
+   <receiver>spinBoxTemperature</receiver>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>100</x>
-     <y>150</y>
+     <x>121</x>
+     <y>167</y>
     </hint>
     <hint type="destinationlabel">
-     <x>88</x>
-     <y>209</y>
+     <x>121</x>
+     <y>197</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>spinBox</sender>
+   <sender>spinBoxTemperature</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>dial</receiver>
+   <receiver>dialTemperature</receiver>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>56</x>
-     <y>206</y>
+     <x>121</x>
+     <y>197</y>
     </hint>
     <hint type="destinationlabel">
-     <x>58</x>
-     <y>152</y>
+     <x>121</x>
+     <y>167</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>timeEdit</sender>
+   <sender>timeEditTime</sender>
    <signal>timeChanged(QTime)</signal>
    <receiver>MainWindow</receiver>
    <slot>timeChangedSpinbox(QTime)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>243</x>
-     <y>210</y>
+     <x>244</x>
+     <y>369</y>
     </hint>
     <hint type="destinationlabel">
      <x>199</x>
@@ -353,14 +353,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>dial_2</sender>
+   <sender>dialTime</sender>
    <signal>valueChanged(int)</signal>
    <receiver>MainWindow</receiver>
    <slot>timeChangedDial(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>296</x>
-     <y>149</y>
+     <x>279</x>
+     <y>339</y>
     </hint>
     <hint type="destinationlabel">
      <x>392</x>
@@ -368,9 +368,94 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>buttonDotNew</sender>
+   <signal>released()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>newDotSlot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>101</x>
+     <y>302</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>5</x>
+     <y>294</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonDotDuplicate</sender>
+   <signal>released()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>duplicateDotSlot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>32</x>
+     <y>332</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>6</x>
+     <y>326</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonDotRemove</sender>
+   <signal>released()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>removeDotSlot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>38</x>
+     <y>363</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>4</x>
+     <y>357</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonStart</sender>
+   <signal>released()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>startSlot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>454</x>
+     <y>355</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>470</x>
+     <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonStop</sender>
+   <signal>released()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>stopSlot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>631</x>
+     <y>360</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>654</x>
+     <y>353</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>timeChangedSpinbox(QTime)</slot>
   <slot>timeChangedDial(int)</slot>
+  <slot>newDotSlot()</slot>
+  <slot>duplicateDotSlot()</slot>
+  <slot>removeDotSlot()</slot>
+  <slot>startSlot()</slot>
+  <slot>stopSlot()</slot>
  </slots>
 </ui>

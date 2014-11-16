@@ -26,12 +26,32 @@ void MainWindow::timeChangedDial(int i)
   int hh = i/60/60;
   int mm = (i/60)%60;
   int ss = i%60%60;
-  ui->timeEdit->setTime(QTime(hh,mm,ss));
+  ui->timeEditTime->setTime(QTime(hh,mm,ss));
 }
 
 void MainWindow::timeChangedSpinbox(QTime t)
 {
-  ui->dial_2->setValue(t.hour()*60*60 +
+  ui->dialTime->setValue(t.hour()*60*60 +
                        t.minute()*60 +
                        t.second());
+}
+
+void MainWindow::newDotSlot() {
+  static unsigned int nodeNumber = 0;
+  qDebug() << "Created new dot";
+  QListWidgetItem * it = new QListWidgetItem(QString::number(nodeNumber),ui->listDots);
+  ui->listDots->setCurrentItem(it);
+  nodeNumber++;
+}
+
+void MainWindow::duplicateDotSlot() {
+  qDebug() << "Duplicated dot";
+  newDotSlot();
+}
+
+void MainWindow::removeDotSlot() {
+  qDebug() << "Removed dot";
+  QListWidgetItem * it = ui->listDots->currentItem();
+  ui->listDots->removeItemWidget(it);
+  delete it;
 }

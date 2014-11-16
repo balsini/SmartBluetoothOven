@@ -27,6 +27,9 @@ private slots:
   void on_actionQuit_triggered();
   void timeChangedDial(int i);
   void timeChangedSpinbox(QTime t);
+  void newDotSlot();
+  void duplicateDotSlot();
+  void removeDotSlot();
 };
 
 #endif // MAINWINDOW_H
