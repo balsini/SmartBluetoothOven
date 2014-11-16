@@ -13,8 +13,10 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    temperatureprofiler.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    temperatureprofiler.h
 
 FORMS    += mainwindow.ui

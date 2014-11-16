@@ -6,6 +6,8 @@
 #include <QMainWindow>
 #include <QTime>
 
+#include "temperatureprofiler.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -15,6 +17,7 @@ class MainWindow : public QMainWindow
   Q_OBJECT
 
   Ui::MainWindow *ui;
+  TemperatureProfiler tempProfile;
 
 public:
   explicit MainWindow(QWidget *parent = 0);
