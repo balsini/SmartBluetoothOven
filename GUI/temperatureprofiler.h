@@ -17,26 +17,16 @@ public slots:
   void mousePressEvent(QGraphicsSceneMouseEvent * mouseEvent);
 };
 
-class MyView : public QGraphicsView
-{
-  Q_OBJECT
-
-  MyScene * scene;
-
-public:
-  MyView(QWidget *parent = 0);
-  ~MyView() { delete scene; }
-};
-
 class TemperatureProfiler : public QWidget
 {
   Q_OBJECT
 
-  MyView * view;
+  QGraphicsView * view;
+  MyScene * scene;
 
 public:
-  TemperatureProfiler(QWidget *parent = 0);
-  ~TemperatureProfiler() { delete view; }
+  TemperatureProfiler(QGraphicsView * view, QWidget *parent);
+  ~TemperatureProfiler() { delete scene; }
 };
 
 #endif // TEMPERATUREPROFILER_H

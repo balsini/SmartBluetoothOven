@@ -19,11 +19,13 @@ MyScene::MyScene(QWidget *parent) :
                parent->width()/2,
                parent->height()/2);
   addRect(0, 0, 0, 0);
+  /*
   //addRect(0,0,parent->width()/2-15, parent->height()/2-15)->setPos(5, 5);
 
   for (unsigned int i=25; i<=275; i-=25) {
-    addSimpleText(QString::number(i))->setPos(20, i);
-  }
+      addSimpleText(QString::number(i))->setPos(20, i);
+    }
+    */
 }
 
 void MyScene::mousePressEvent(QGraphicsSceneMouseEvent * mouseEvent)
@@ -48,37 +50,19 @@ void MyScene::mousePressEvent(QGraphicsSceneMouseEvent * mouseEvent)
 
 /***********************
  *                     *
- * MyView              *
- *                     *
- ***********************/
-
-MyView::MyView(QWidget *parent) :
-  QGraphicsView(parent)
-{
-  scene = new MyScene(this);
-  this->setScene(scene);
-
-  this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-  this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
-  setAlignment(Qt::AlignLeft | Qt::AlignTop);
-}
-
-
-/***********************
- *                     *
  * TemperatureProfiler *
  *                     *
  ***********************/
 
-TemperatureProfiler::TemperatureProfiler(QWidget *parent):
+TemperatureProfiler::TemperatureProfiler(QGraphicsView *view, QWidget *parent):
   QWidget(parent)
 {
-  view = new MyView(this);
-  setWindowTitle("Temperature Profile Editor");
-  setFixedWidth(480);
-  setFixedHeight(320);
-  QHBoxLayout *l = new QHBoxLayout(this);
-  this->setLayout(l);
-  l->addWidget(view);
+  this->view = view;
+  scene = new MyScene(view);
+  view->setScene(scene);
+
+  view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+  view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+  view->setAlignment(Qt::AlignLeft | Qt::AlignTop);
 }

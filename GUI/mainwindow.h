@@ -17,7 +17,7 @@ class MainWindow : public QMainWindow
   Q_OBJECT
 
   Ui::MainWindow *ui;
-  TemperatureProfiler tempProfile;
+  TemperatureProfiler *tempProfile;
 
 public:
   explicit MainWindow(QWidget *parent = 0);

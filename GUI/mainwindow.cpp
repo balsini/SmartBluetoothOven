@@ -8,11 +8,13 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->setupUi(this);
   this->setFixedHeight(this->height());
   this->setFixedWidth(this->width());
-  //tempProfile.show();
+
+  tempProfile = new TemperatureProfiler(ui->graphicsView, this);
 }
 
 MainWindow::~MainWindow()
 {
+  delete tempProfile;
   delete ui;
 }
 
