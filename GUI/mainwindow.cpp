@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "mainwindow.hpp"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -9,7 +9,8 @@ MainWindow::MainWindow(QWidget *parent) :
   this->setFixedHeight(this->height());
   this->setFixedWidth(this->width());
 
-  tempProfile = new TemperatureProfiler(ui->graphicsView, this);
+  tempProfile = new TemperatureProfiler(ui->graphicsView);
+  connect(tempProfile->getScene(), SIGNAL(newDotSignal()), this, SLOT(updateDotSlot()));
 }
 
 MainWindow::~MainWindow()
@@ -20,7 +21,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionQuit_triggered()
 {
-    close();
+  close();
 }
 
 void MainWindow::timeChangedDial(int i)
@@ -34,26 +35,46 @@ void MainWindow::timeChangedDial(int i)
 void MainWindow::timeChangedSpinbox(QTime t)
 {
   ui->dialTime->setValue(t.hour()*60*60 +
-                       t.minute()*60 +
-                       t.second());
+                         t.minute()*60 +
+                         t.second());
 }
 
-void MainWindow::newDotSlot() {
-  static unsigned int nodeNumber = 0;
-  qDebug() << "Created new dot";
-  QListWidgetItem * it = new QListWidgetItem(QString::number(nodeNumber),ui->listDots);
+void MainWindow::updateDotSlot()
+{
+  QListWidgetItem * it;
+  ui->listDots->clear();
+  for (int i=0; i<dotList.count(); i++) {
+    it = new QListWidgetItem(QString::number(i),ui->listDots);
+  }
   ui->listDots->setCurrentItem(it);
-  nodeNumber++;
 }
 
-void MainWindow::duplicateDotSlot() {
+void MainWindow::newDotSlot()
+{
+  qDebug() << "Created new dot with temp = "
+           << 1 - (float)ui->dialTemperature->value() / ui->dialTemperature->maximum();
+
+  dotList.append(Dot(1, 1 - (float)ui->dialTemperature->value() / ui->dialTemperature->maximum()));
+  updateDotSlot();
+
+  tempProfile->getScene()->update();
+}
+
+void MainWindow::duplicateDotSlot()
+{
   qDebug() << "Duplicated dot";
   newDotSlot();
 }
 
-void MainWindow::removeDotSlot() {
+void MainWindow::removeDotSlot()
+{
   qDebug() << "Removed dot";
   QListWidgetItem * it = ui->listDots->currentItem();
   ui->listDots->removeItemWidget(it);
+
+  dotList.removeAt(ui->listDots->currentRow());
+
   delete it;
+
+  tempProfile->getScene()->update();
 }

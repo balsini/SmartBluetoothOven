@@ -6,10 +6,10 @@
 #include <QMainWindow>
 #include <QTime>
 
-#include "temperatureprofiler.h"
+#include "temperatureprofiler.hpp"
 
 namespace Ui {
-class MainWindow;
+  class MainWindow;
 }
 
 class MainWindow : public QMainWindow
@@ -30,6 +30,9 @@ private slots:
   void newDotSlot();
   void duplicateDotSlot();
   void removeDotSlot();
+
+public slots:
+  void updateDotSlot();
 };
 
 #endif // MAINWINDOW_H

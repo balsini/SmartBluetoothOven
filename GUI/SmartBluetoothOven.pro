@@ -16,7 +16,8 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     temperatureprofiler.cpp
 
-HEADERS  += mainwindow.h \
-    temperatureprofiler.h
+HEADERS  += \
+    temperatureprofiler.hpp \
+    mainwindow.hpp
 
 FORMS    += mainwindow.ui
