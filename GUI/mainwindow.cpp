@@ -51,10 +51,27 @@ void MainWindow::updateDotSlot()
 
 void MainWindow::newDotSlot()
 {
-  qDebug() << "Created new dot with temp = "
-           << 1 - (float)ui->dialTemperature->value() / ui->dialTemperature->maximum();
+  static int maxTime = 0;
 
-  dotList.append(Dot(1, 1 - (float)ui->dialTemperature->value() / ui->dialTemperature->maximum()));
+  float time;
+  float temp = 1 - (float)ui->dialTemperature->value() / ui->dialTemperature->maximum();
+
+  if (ui->dialTime->value() > maxTime) {
+    if (maxTime == 0)
+      time = 1;
+    else
+      time = (float)ui->dialTime->value() / maxTime;
+    maxTime = ui->dialTime->value();
+  } else {
+    time = (float)ui->dialTime->value() / maxTime;
+  }
+
+  qDebug() << "Created new dot with temp = "
+           << temp;
+  qDebug() << "Created new dot with time = "
+           << time;
+
+  dotList.append(Dot(time, temp));
   updateDotSlot();
 
   tempProfile->getScene()->update();
