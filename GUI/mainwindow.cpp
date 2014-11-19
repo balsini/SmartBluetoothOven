@@ -1,6 +1,9 @@
 #include "mainwindow.hpp"
 #include "ui_mainwindow.h"
 
+int maxTime = 0;
+int maxTemp = 270;
+
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
   ui(new Ui::MainWindow)
@@ -51,8 +54,6 @@ void MainWindow::updateDotSlot()
 
 void MainWindow::newDotSlot()
 {
-  static int maxTime = 0;
-
   float time;
   float temp = 1 - (float)ui->dialTemperature->value() / ui->dialTemperature->maximum();
 

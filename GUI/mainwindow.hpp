@@ -22,6 +22,7 @@ class MainWindow : public QMainWindow
 public:
   explicit MainWindow(QWidget *parent = 0);
   ~MainWindow();
+  void update() { tempProfile->getScene()->update(); }
 
 private slots:
   void on_actionQuit_triggered();
@@ -34,5 +35,8 @@ private slots:
 public slots:
   void updateDotSlot();
 };
+
+extern int maxTime;
+extern int maxTemp;
 
 #endif // MAINWINDOW_H

@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QGraphicsSimpleTextItem>
 #include <QLayout>
+#include <QBrush>
 
 #include "mainwindow.hpp"
 
@@ -23,14 +24,6 @@ MyScene::MyScene(QWidget *parent) :
                parent->width()/2,
                parent->height()/2);
   addRect(0, 0, 0, 0);
-
-  /*
-  //addRect(0,0,parent->width()/2-15, parent->height()/2-15)->setPos(5, 5);
-
-  for (unsigned int i=25; i<=275; i-=25) {
-      addSimpleText(QString::number(i))->setPos(20, i);
-    }
-  */
 }
 
 void MyScene::addDot(float x, float y)
@@ -41,24 +34,26 @@ void MyScene::addDot(float x, float y)
 
 void MyScene::mousePressEvent(QGraphicsSceneMouseEvent * mouseEvent)
 {
-  qDebug() << "Mouse premuto in [ "
-           << mouseEvent->lastScenePos().x()
-           << " , "
-           << mouseEvent->lastScenePos().y()
-           << " ]";
+  if (dotList.count() > 0) {
+    qDebug() << "Mouse premuto in [ "
+             << mouseEvent->lastScenePos().x()
+             << " , "
+             << mouseEvent->lastScenePos().y()
+             << " ]";
 
-  float x = (float)(mouseEvent->lastScenePos().x()) / (((QWidget *)this->parent())->width());
-  float y = (float)(mouseEvent->lastScenePos().y()) / (((QWidget *)this->parent())->height());
+    float x = (float)(mouseEvent->lastScenePos().x()) / (((QWidget *)this->parent())->width());
+    float y = (float)(mouseEvent->lastScenePos().y()) / (((QWidget *)this->parent())->height());
 
-  addDot(x,y);
+    addDot(x,y);
 
-  qDebug() << "addDot("
-           << x
-           << ", "
-           << y
-           << ");";
+    qDebug() << "addDot("
+             << x
+             << ", "
+             << y
+             << ");";
 
-  emit newDotSignal();
+    emit newDotSignal();
+  }
 }
 
 void MyScene::update()
@@ -106,10 +101,21 @@ void MyScene::update()
 
     // Draw dots
     for (int i=0; i<dotList.count(); i++) {
-      addEllipse(((QWidget *)this->parent())->width() * dotList.at(i).x(),
-                 ((QWidget *)this->parent())->height() * dotList.at(i).y(),
+      int posX = ((QWidget *)this->parent())->width() * dotList.at(i).x();
+      int posY = ((QWidget *)this->parent())->height() * dotList.at(i).y();
+      addEllipse(posX,
+                 posY,
                  10,
                  10)->setPos(-5,-5);
+      QString txt1, txt2;
+      txt1.append(QString::number((int)(dotList.at(i).x() * (float)maxTime)));
+      txt1.append(" s, ");
+      txt2.append(QString::number((int)((1.0 - dotList.at(i).y()) * (float)maxTemp)));
+      txt2.append(" 'C");
+      addSimpleText(txt1)->setPos(posX - 30,
+                                 posY - 32);
+      addSimpleText(txt2)->setPos(posX - 30,
+                                 posY - 20);
     }
 
     // Draw lines
@@ -126,7 +132,7 @@ void MyScene::update()
               ((QWidget *)this->parent())->height() * dotList.at(i-1).y());
     }
   } else {
-
+    // Working as common oven
   }
 }
 
@@ -146,6 +152,11 @@ TemperatureProfiler::TemperatureProfiler(QGraphicsView *view)
   view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
   view->setAlignment(Qt::AlignLeft | Qt::AlignTop);
+
+  QBrush viewbrush;
+  viewbrush.setStyle(Qt::CrossPattern);
+  viewbrush.setColor(Qt::lightGray);
+  view->setBackgroundBrush(viewbrush);
 }
 
 TemperatureProfiler::~TemperatureProfiler()
