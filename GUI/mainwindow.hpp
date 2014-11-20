@@ -29,9 +29,9 @@ private slots:
   void timeChangedDial(int i);
   void timeChangedSpinbox(QTime t);
   void newDotSlot();
-  void duplicateDotSlot();
   void removeDotSlot();
   void anotherDotSelected(int n);
+  void temperatureChanged(int t);
 
 public slots:
   void updateDotSlot();

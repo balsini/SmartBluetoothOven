@@ -33,6 +33,22 @@ void MainWindow::timeChangedDial(int i)
   int mm = (i/60)%60;
   int ss = i%60%60;
   ui->timeEditTime->setTime(QTime(hh,mm,ss));
+
+  if (ui->listDots->currentRow() > 0 && dotList[ui->listDots->currentRow() - 1].x() * maxTime < i
+      && ui->listDots->currentRow() < dotList.count() - 1 && dotList[ui->listDots->currentRow() + 1].x() * maxTime > i) {
+    dotList[ui->listDots->currentRow()].x((double)i / maxTime);
+  } else if (ui->listDots->currentRow() == 0
+             && ui->listDots->currentRow() < dotList.count() - 1 && dotList[ui->listDots->currentRow() + 1].x() * maxTime > i) {
+    // Left dot
+    dotList[ui->listDots->currentRow()].x((double)i / maxTime );
+  } else if (dotList.count() > 1 && ui->listDots->currentRow() == dotList.count() - 1
+             && dotList[ui->listDots->currentRow() - 1].x() * maxTime < i) {
+    // Right dot
+    dotList[ui->listDots->currentRow()].x((double)i / maxTime );
+    maxTime = i;
+  }
+
+  tempProfile->getScene()->update();
 }
 
 void MainWindow::timeChangedSpinbox(QTime t)
@@ -54,17 +70,17 @@ void MainWindow::updateDotSlot()
 
 void MainWindow::newDotSlot()
 {
-  float time;
-  float temp = 1 - (float)ui->dialTemperature->value() / ui->dialTemperature->maximum();
+  double time;
+  double temp = 1 - (double)ui->dialTemperature->value() / ui->dialTemperature->maximum();
 
   if (ui->dialTime->value() > maxTime) {
     if (maxTime == 0)
       time = 1;
     else
-      time = (float)ui->dialTime->value() / maxTime;
+      time = (double)ui->dialTime->value() / maxTime;
     maxTime = ui->dialTime->value();
   } else {
-    time = (float)ui->dialTime->value() / maxTime;
+    time = (double)ui->dialTime->value() / maxTime;
   }
 
   qDebug() << "Created new dot with temp = "
@@ -76,12 +92,6 @@ void MainWindow::newDotSlot()
   updateDotSlot();
 
   tempProfile->getScene()->update();
-}
-
-void MainWindow::duplicateDotSlot()
-{
-  qDebug() << "Duplicated dot";
-  newDotSlot();
 }
 
 void MainWindow::removeDotSlot()
@@ -107,6 +117,16 @@ void MainWindow::anotherDotSelected(int n)
     dotList[n].selected(true);
     lastDotSelected = n;
 
+    ui->dialTemperature->setValue((1.0 - dotList[n].y()) * ui->dialTemperature->maximum());
+    ui->dialTime->setValue(dotList[n].x() * maxTime);
+
     tempProfile->getScene()->update();
   }
+}
+
+void MainWindow::temperatureChanged(int t)
+{
+  dotList[ui->listDots->currentRow()].y(1 - (double)t / ui->dialTemperature->maximum());
+
+  tempProfile->getScene()->update();
 }

@@ -26,7 +26,7 @@ MyScene::MyScene(QWidget *parent) :
   addRect(0, 0, 0, 0);
 }
 
-void MyScene::addDot(float x, float y)
+void MyScene::addDot(double x, double y)
 {
   dotList.append(Dot(x, y));
   update();
@@ -41,8 +41,8 @@ void MyScene::mousePressEvent(QGraphicsSceneMouseEvent * mouseEvent)
              << mouseEvent->lastScenePos().y()
              << " ]";
 
-    float x = (float)(mouseEvent->lastScenePos().x()) / (((QWidget *)this->parent())->width());
-    float y = (float)(mouseEvent->lastScenePos().y()) / (((QWidget *)this->parent())->height());
+    double x = (double)(mouseEvent->lastScenePos().x()) / (((QWidget *)this->parent())->width());
+    double y = (double)(mouseEvent->lastScenePos().y()) / (((QWidget *)this->parent())->height());
 
     addDot(x,y);
 
@@ -84,8 +84,8 @@ void MyScene::update()
     }
 
     // Normalize dots "x" with the maximum one
-    float maxX = dotList.last().x();
-    float scale = 1 / maxX;
+    double maxX = dotList.last().x();
+    double scale = 1 / maxX;
 
     for (int i=0; i<dotList.count(); i++) {
       Dot d = dotList.takeFirst();
@@ -119,9 +119,9 @@ void MyScene::update()
                  10,
                  dotPen)->setPos(-5,-5);
       QString txt1, txt2;
-      txt1.append(QString::number((int)(dotList.at(i).x() * (float)maxTime)));
+      txt1.append(QString::number((int)(dotList.at(i).x() * (double)maxTime)));
       txt1.append(" s, ");
-      txt2.append(QString::number((int)((1.0 - dotList.at(i).y()) * (float)maxTemp)));
+      txt2.append(QString::number((int)((1.0 - dotList.at(i).y()) * (double)maxTemp)));
       txt2.append(" 'C");
       addSimpleText(txt1)->setPos(posX - 30,
                                   posY - 32);
@@ -179,7 +179,7 @@ TemperatureProfiler::~TemperatureProfiler()
   delete scene;
 }
 
-void TemperatureProfiler::addDot(float x, float y)
+void TemperatureProfiler::addDot(double x, double y)
 {
   if (x<=1 && x>=0 && y<=1 && y>=0)
     scene->addDot(x, y);

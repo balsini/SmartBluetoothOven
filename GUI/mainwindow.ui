@@ -107,7 +107,7 @@
       <height>341</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayoutLeft" stretch="0,0,0,0,0">
+    <layout class="QVBoxLayout" name="verticalLayoutLeft" stretch="0,0,0,0">
      <property name="sizeConstraint">
       <enum>QLayout::SetDefaultConstraint</enum>
      </property>
@@ -128,13 +128,6 @@
       <widget class="QPushButton" name="buttonDotNew">
        <property name="text">
         <string>New</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="buttonDotDuplicate">
-       <property name="text">
-        <string>Duplicate</string>
        </property>
       </widget>
      </item>
@@ -404,22 +397,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>buttonDotDuplicate</sender>
-   <signal>released()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>duplicateDotSlot()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>32</x>
-     <y>332</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>6</x>
-     <y>326</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>buttonDotRemove</sender>
    <signal>released()</signal>
    <receiver>MainWindow</receiver>
@@ -483,6 +460,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>dialTemperature</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>temperatureChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>249</x>
+     <y>113</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>284</x>
+     <y>111</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>timeChangedSpinbox(QTime)</slot>
@@ -493,5 +486,6 @@
   <slot>startSlot()</slot>
   <slot>stopSlot()</slot>
   <slot>anotherDotSelected(int)</slot>
+  <slot>temperatureChanged(int)</slot>
  </slots>
 </ui>

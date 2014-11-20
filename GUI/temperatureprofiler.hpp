@@ -9,15 +9,15 @@
 
 class Dot
 {
-  float _x, _y;
+  double _x, _y;
   bool _selected;
 
 public:
-  Dot(float x, float y): _x(x), _y(y), _selected(false) {}
-  float x() const { return _x; }
-  float y() const { return _y; }
-  void x(float x) { _x = x; }
-  void y(float y) { _y = y; }
+  Dot(double x, double y): _x(x), _y(y), _selected(false) {}
+  double x() const { return _x; }
+  double y() const { return _y; }
+  void x(double x) { _x = x; }
+  void y(double y) { _y = y; }
   bool selected() const { return _selected; }
   void selected(bool s) { _selected = s; }
 };
@@ -34,7 +34,7 @@ signals:
 public:
   MyScene(QWidget *parent = 0);
   ~MyScene() {}
-  void addDot(float x, float y);
+  void addDot(double x, double y);
   void update();
 
 public slots:
@@ -49,7 +49,7 @@ class TemperatureProfiler
 public:
   TemperatureProfiler(QGraphicsView *view);
   ~TemperatureProfiler();
-  void addDot(float x, float y);
+  void addDot(double x, double y);
   MyScene * getScene() { return scene; }
 };
 
