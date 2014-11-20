@@ -122,14 +122,14 @@
       </widget>
      </item>
      <item>
-      <widget class="QListWidget" name="listDots"/>
-     </item>
-     <item>
       <widget class="QPushButton" name="buttonDotNew">
        <property name="text">
         <string>Edit</string>
        </property>
       </widget>
+     </item>
+     <item>
+      <widget class="QListWidget" name="listDots"/>
      </item>
      <item>
       <widget class="QPushButton" name="buttonDotRemove">
