@@ -18,6 +18,7 @@ class MainWindow : public QMainWindow
 
   Ui::MainWindow *ui;
   TemperatureProfiler *tempProfile;
+  QString filename;
 
 public:
   explicit MainWindow(QWidget *parent = 0);
@@ -32,6 +33,14 @@ private slots:
   void removeDotSlot();
   void anotherDotSelected(int n);
   void temperatureChanged(int t);
+
+  void on_actionOpen_triggered();
+
+  void on_actionSave_triggered();
+  void saveTo(const QString &tmpfilename);
+
+  void on_actionSave_As_triggered();
+  void updateTitle();
 
 public slots:
   void updateDotSlot();

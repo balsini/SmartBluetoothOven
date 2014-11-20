@@ -1,6 +1,9 @@
 #include "mainwindow.hpp"
 #include "ui_mainwindow.h"
 
+#include <QFile>
+#include <QFileDialog>
+
 int maxTime = 0;
 int maxTemp = 270;
 
@@ -138,4 +141,68 @@ void MainWindow::temperatureChanged(int t)
   dotList[ui->listDots->currentRow()].y(1 - (double)t / ui->dialTemperature->maximum());
 
   tempProfile->getScene()->update();
+}
+
+void MainWindow::saveTo(const QString &tmpfilename) {
+  QString name = tmpfilename;
+
+  if (name.mid(name.length() - 4, 4) != ".xpr")
+    name.append(".xpr");
+
+  QFile openFile(name);
+  if (openFile.open(QIODevice::WriteOnly)) {
+    filename = name;
+
+    qDebug() << "Writing to file: " << name;
+
+    // TODO
+    openFile.write("Contenuto File");
+
+    updateTitle();
+    openFile.close();
+
+  } else {
+    qDebug() << "Error while opening file";
+  }
+}
+
+void MainWindow::on_actionSave_As_triggered()
+{
+  QString tmpfilename = QFileDialog::getSaveFileName(
+        this,
+        tr("Save File"),
+        "./",
+        "Experiment File (*.xpr)"
+        );
+  saveTo(tmpfilename);
+}
+
+void MainWindow::on_actionSave_triggered()
+{
+  QString tmpfilename = filename;
+  if (filename.length() == 0) {
+    tmpfilename = QFileDialog::getSaveFileName(
+          this,
+          tr("Save File"),
+          "./",
+          "Experiment File (*.xpr)"
+          );
+  }
+
+  saveTo(tmpfilename);
+}
+
+void MainWindow::updateTitle()
+{
+  QString t = "Wifi Simulator GUI";
+  if (filename.length() > 0) {
+    t.append(" - ");
+    t.append(filename);
+  }
+  this->setWindowTitle(t);
+}
+
+void MainWindow::on_actionOpen_triggered()
+{
+    // TODO
 }
