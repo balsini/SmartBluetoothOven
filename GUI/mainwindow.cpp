@@ -70,6 +70,8 @@ void MainWindow::updateDotSlot()
 
 void MainWindow::newDotSlot()
 {
+  ui->buttonDotNew->setEnabled(false);
+
   double time;
   double temp = 1 - (double)ui->dialTemperature->value() / ui->dialTemperature->maximum();
 
@@ -92,6 +94,8 @@ void MainWindow::newDotSlot()
   updateDotSlot();
 
   tempProfile->getScene()->update();
+
+  ui->buttonDotRemove->setEnabled(true);
 }
 
 void MainWindow::removeDotSlot()
@@ -105,13 +109,18 @@ void MainWindow::removeDotSlot()
   delete it;
 
   tempProfile->getScene()->update();
+
+  if (dotList.count() == 0) {
+    ui->buttonDotNew->setEnabled(true);
+    ui->buttonDotRemove->setEnabled(false);
+  }
 }
 
 void MainWindow::anotherDotSelected(int n)
 {
   static int lastDotSelected = 0;
 
-  if (n >= 0) {
+  if (n >= 0 && dotList.count() > 1) {
     if (lastDotSelected < dotList.count())
       dotList[lastDotSelected].selected(false);
     dotList[n].selected(true);

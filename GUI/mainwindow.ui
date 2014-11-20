@@ -127,12 +127,15 @@
      <item>
       <widget class="QPushButton" name="buttonDotNew">
        <property name="text">
-        <string>New</string>
+        <string>Edit</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="buttonDotRemove">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Remove</string>
        </property>
