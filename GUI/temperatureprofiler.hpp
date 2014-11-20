@@ -10,13 +10,16 @@
 class Dot
 {
   float _x, _y;
+  bool _selected;
 
 public:
-  Dot(float x, float y): _x(x), _y(y) {}
+  Dot(float x, float y): _x(x), _y(y), _selected(false) {}
   float x() const { return _x; }
   float y() const { return _y; }
   void x(float x) { _x = x; }
   void y(float y) { _y = y; }
+  bool selected() const { return _selected; }
+  void selected(bool s) { _selected = s; }
 };
 
 extern QList<Dot> dotList;

@@ -96,3 +96,17 @@ void MainWindow::removeDotSlot()
 
   tempProfile->getScene()->update();
 }
+
+void MainWindow::anotherDotSelected(int n)
+{
+  static int lastDotSelected = 0;
+
+  if (n >= 0) {
+    if (lastDotSelected < dotList.count())
+      dotList[lastDotSelected].selected(false);
+    dotList[n].selected(true);
+    lastDotSelected = n;
+
+    tempProfile->getScene()->update();
+  }
+}

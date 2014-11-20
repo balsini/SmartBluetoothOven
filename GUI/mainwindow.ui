@@ -467,6 +467,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>listDots</sender>
+   <signal>currentRowChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>anotherDotSelected(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>57</x>
+     <y>126</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>6</x>
+     <y>120</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>timeChangedSpinbox(QTime)</slot>
@@ -476,5 +492,6 @@
   <slot>removeDotSlot()</slot>
   <slot>startSlot()</slot>
   <slot>stopSlot()</slot>
+  <slot>anotherDotSelected(int)</slot>
  </slots>
 </ui>

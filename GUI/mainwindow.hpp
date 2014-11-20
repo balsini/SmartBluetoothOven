@@ -31,6 +31,7 @@ private slots:
   void newDotSlot();
   void duplicateDotSlot();
   void removeDotSlot();
+  void anotherDotSelected(int n);
 
 public slots:
   void updateDotSlot();
