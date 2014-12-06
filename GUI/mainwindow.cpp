@@ -1,6 +1,8 @@
 #include "mainwindow.hpp"
 #include "ui_mainwindow.h"
 
+#include <sstream>
+
 #include <QFile>
 #include <QFileDialog>
 
@@ -209,5 +211,46 @@ void MainWindow::updateTitle()
 
 void MainWindow::on_actionOpen_triggered()
 {
-  // TODO
+  QString tmpfilename = QFileDialog::getOpenFileName(
+        this,
+        tr("Open File"),
+        "./",
+        "Temperature Profile File (*.tpf)"
+        );
+
+  QFile openFile(tmpfilename);
+  if (openFile.open(QIODevice::ReadOnly)) {
+
+    dotList.clear();
+
+    for (;;) {
+      QString s(openFile.readLine().data());
+      if (s.count() == 0)
+        break;
+
+      std::stringstream ss(s.toStdString());
+
+      double x, y;
+      ss >> x;
+      ss >> y;
+
+      x = x / tempProfile->getScene()->width();
+      y = 1.0 - y / maxTemp;
+
+      qDebug() << "X : " << x << "\tY : " << y;
+
+      Dot d(x, y);
+      dotList.append(d);
+    }
+
+    tempProfile->getScene()->update();
+    updateDotSlot();
+
+    openFile.close();
+
+    filename = tmpfilename;
+    updateTitle();
+  } else {
+    qDebug() << "Error while opening file";
+  }
 }
