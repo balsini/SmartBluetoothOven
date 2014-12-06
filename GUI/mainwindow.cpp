@@ -138,7 +138,7 @@ void MainWindow::anotherDotSelected(int n)
 
 void MainWindow::temperatureChanged(int t)
 {
-  dotList[ui->listDots->currentRow()].y(1 - (double)t / ui->dialTemperature->maximum());
+  dotList[ui->listDots->currentRow()].y(1.0 - (double)t / ui->dialTemperature->maximum());
 
   tempProfile->getScene()->update();
 }
@@ -146,8 +146,8 @@ void MainWindow::temperatureChanged(int t)
 void MainWindow::saveTo(const QString &tmpfilename) {
   QString name = tmpfilename;
 
-  if (name.mid(name.length() - 4, 4) != ".xpr")
-    name.append(".xpr");
+  if (name.mid(name.length() - 4, 4) != ".tpf")
+    name.append(".tpf");
 
   QFile openFile(name);
   if (openFile.open(QIODevice::WriteOnly)) {
@@ -155,8 +155,13 @@ void MainWindow::saveTo(const QString &tmpfilename) {
 
     qDebug() << "Writing to file: " << name;
 
-    // TODO
-    openFile.write("Contenuto File");
+    for (int i=0; i<dotList.count(); ++i) {
+      QString row = "";
+      row.append(QString::number(dotList[i].x() * maxTime) + " ");
+      row.append(QString::number((1.0 - dotList[i].y()) * ui->dialTemperature->maximum()) + "\n");
+
+      openFile.write(row.toStdString().c_str());
+    }
 
     updateTitle();
     openFile.close();
@@ -172,7 +177,7 @@ void MainWindow::on_actionSave_As_triggered()
         this,
         tr("Save File"),
         "./",
-        "Experiment File (*.xpr)"
+        "Temperature Profile File (*.tpf)"
         );
   saveTo(tmpfilename);
 }
@@ -185,7 +190,7 @@ void MainWindow::on_actionSave_triggered()
           this,
           tr("Save File"),
           "./",
-          "Experiment File (*.xpr)"
+          "Temperature Profile File (*.tpf)"
           );
   }
 
@@ -194,7 +199,7 @@ void MainWindow::on_actionSave_triggered()
 
 void MainWindow::updateTitle()
 {
-  QString t = "Wifi Simulator GUI";
+  QString t = "SmartBluetoothOven";
   if (filename.length() > 0) {
     t.append(" - ");
     t.append(filename);
@@ -204,5 +209,5 @@ void MainWindow::updateTitle()
 
 void MainWindow::on_actionOpen_triggered()
 {
-    // TODO
+  // TODO
 }
