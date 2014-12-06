@@ -241,6 +241,8 @@ void MainWindow::on_actionOpen_triggered()
 
       Dot d(x, y);
       dotList.append(d);
+
+      ui->buttonDotRemove->setEnabled(true);
     }
 
     tempProfile->getScene()->update();
