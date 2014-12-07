@@ -271,7 +271,7 @@
     <property name="title">
      <string>Oven</string>
     </property>
-    <addaction name="actionSearch"/>
+    <addaction name="actionConnection"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuOven"/>
@@ -283,7 +283,7 @@
     <string>About</string>
    </property>
   </action>
-  <action name="actionSearch">
+  <action name="actionConnection">
    <property name="text">
     <string>Connection</string>
    </property>

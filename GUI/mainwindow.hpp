@@ -7,17 +7,19 @@
 #include <QTime>
 
 #include "temperatureprofiler.hpp"
+#include "bluetoothmanager.h"
 
 namespace Ui {
-  class MainWindow;
+class MainWindow;
 }
 
 class MainWindow : public QMainWindow
 {
   Q_OBJECT
 
-  Ui::MainWindow *ui;
-  TemperatureProfiler *tempProfile;
+  Ui::MainWindow * ui;
+  TemperatureProfiler * tempProfile;
+  BluetoothManager btManager;
   QString filename;
 
 public:
@@ -41,6 +43,8 @@ private slots:
 
   void on_actionSave_As_triggered();
   void updateTitle();
+
+  void on_actionConnection_triggered();
 
 public slots:
   void updateDotSlot();

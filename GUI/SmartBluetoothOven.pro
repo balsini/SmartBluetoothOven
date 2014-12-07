@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui bluetooth
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -14,10 +14,13 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    temperatureprofiler.cpp
+    temperatureprofiler.cpp \
+    bluetoothmanager.cpp
 
 HEADERS  += \
     temperatureprofiler.hpp \
-    mainwindow.hpp
+    mainwindow.hpp \
+    bluetoothmanager.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    bluetoothmanager.ui

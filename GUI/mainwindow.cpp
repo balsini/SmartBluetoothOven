@@ -256,3 +256,8 @@ void MainWindow::on_actionOpen_triggered()
     qDebug() << "Error while opening file";
   }
 }
+
+void MainWindow::on_actionConnection_triggered()
+{
+    btManager.show();
+}
