@@ -103,7 +103,6 @@ void ChatClient::sendMessage(const QString &message)
 //! [connected]
 void ChatClient::connected()
 {
-    sendMessage("Il PC si e` connesso!");
     emit connected(socket->peerName());
 }
 //! [connected]

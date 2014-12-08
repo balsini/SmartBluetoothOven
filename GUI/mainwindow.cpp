@@ -270,4 +270,6 @@ void MainWindow::btConnectionEstablished(ChatClient * client)
 {
   qDebug() << "MainWindow::btConnectionEstablished";
   btClient = client;
+
+  btClient->sendMessage("PC Connected");
 }
