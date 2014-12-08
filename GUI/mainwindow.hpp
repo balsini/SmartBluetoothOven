@@ -8,6 +8,7 @@
 
 #include "temperatureprofiler.hpp"
 #include "bluetoothmanager.hpp"
+#include "chatclient.hpp"
 
 namespace Ui {
 class MainWindow;
@@ -19,7 +20,8 @@ class MainWindow : public QMainWindow
 
   Ui::MainWindow * ui;
   TemperatureProfiler * tempProfile;
-  BluetoothManager btManager;
+  BluetoothManager * btManager;
+  ChatClient * btClient;
   QString filename;
 
 public:
@@ -48,6 +50,7 @@ private slots:
 
 public slots:
   void updateDotSlot();
+  void btConnectionEstablished(ChatClient * client);
 };
 
 extern int maxTime;

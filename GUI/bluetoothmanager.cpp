@@ -1,6 +1,7 @@
 #include "bluetoothmanager.hpp"
 #include "ui_bluetoothmanager.h"
-#include "chatclient.hpp"
+
+#include "mainwindow.hpp"
 
 #include <QDebug>
 
@@ -9,6 +10,8 @@ BluetoothManager::BluetoothManager(QWidget *parent) :
   ui(new Ui::BluetoothManager)
 {
   ui->setupUi(this);
+  MainWindow * mw = (MainWindow *)parent;
+  connect(this, SIGNAL(btConnectionEstablished(ChatClient*)), mw, SLOT(btConnectionEstablished(ChatClient*)));
 }
 
 BluetoothManager::~BluetoothManager()
@@ -46,7 +49,7 @@ void BluetoothManager::on_pushButton_2_clicked()
     qDebug() << "Connecting to service 2" << service.serviceName()
              << "on" << service.device().name();
 
-    ChatClient * client = new ChatClient(this);
+    client = new ChatClient(this);
 
     ui->remoteTargetLabel->setText(QString("Connecting to: \"%1\"...").arg(service.device().name()));
 
@@ -66,6 +69,8 @@ void BluetoothManager::on_pushButton_2_clicked()
 
 void BluetoothManager::on_pushButton_3_clicked()
 {
+  this->close();
+  emit btConnectionEstablished(client);
 }
 
 void BluetoothManager::connected(QString str)

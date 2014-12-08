@@ -13,6 +13,7 @@
 #include <QBluetoothServiceInfo>
 
 #include "remoteselector.hpp"
+#include "chatclient.hpp"
 
 namespace Ui {
   class BluetoothManager;
@@ -23,6 +24,7 @@ class BluetoothManager : public QDialog
   Q_OBJECT
 
   Ui::BluetoothManager * ui;
+  ChatClient * client;
 
 public:
   explicit BluetoothManager(QWidget * parent = 0);
@@ -33,6 +35,9 @@ private slots:
   void on_pushButton_2_clicked();
   void connected(QString str);
   void on_pushButton_3_clicked();
+
+signals:
+  void btConnectionEstablished(ChatClient * client);
 };
 
 #endif

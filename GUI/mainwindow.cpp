@@ -13,6 +13,8 @@ MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
   ui(new Ui::MainWindow)
 {
+  btManager = 0;
+  btClient = 0;
   ui->setupUi(this);
   this->setFixedHeight(this->height());
   this->setFixedWidth(this->width());
@@ -259,5 +261,13 @@ void MainWindow::on_actionOpen_triggered()
 
 void MainWindow::on_actionConnection_triggered()
 {
-    btManager.show();
+  if (!btManager)
+    btManager = new BluetoothManager(this);
+  btManager->show();
+}
+
+void MainWindow::btConnectionEstablished(ChatClient * client)
+{
+  qDebug() << "MainWindow::btConnectionEstablished";
+  btClient = client;
 }
