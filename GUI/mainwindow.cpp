@@ -14,7 +14,6 @@ MainWindow::MainWindow(QWidget *parent) :
   ui(new Ui::MainWindow)
 {
   btManager = 0;
-  btClient = 0;
   ui->setupUi(this);
   this->setFixedHeight(this->height());
   this->setFixedWidth(this->width());
@@ -266,10 +265,8 @@ void MainWindow::on_actionConnection_triggered()
   btManager->show();
 }
 
-void MainWindow::btConnectionEstablished(ChatClient * client)
+void MainWindow::btConnectionEstablished()
 {
   qDebug() << "MainWindow::btConnectionEstablished";
-  btClient = client;
-
-  btClient->sendMessage("PC Connected");
+  btManager->sendMessage("PC Connected");
 }

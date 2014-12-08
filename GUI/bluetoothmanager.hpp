@@ -36,8 +36,16 @@ private slots:
   void connected(QString str);
   void on_pushButton_3_clicked();
 
+public slots:
+  void sendMessage(QString str) {
+    client->sendMessage(str);
+  }
+
 signals:
   void btConnectionEstablished(ChatClient * client);
+  void sentMessage(QString str);
+  void clientDisconnected();
+  void showMessage(QString s1, QString s2);
 };
 
 #endif

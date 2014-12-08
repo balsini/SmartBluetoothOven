@@ -21,7 +21,6 @@ class MainWindow : public QMainWindow
   Ui::MainWindow * ui;
   TemperatureProfiler * tempProfile;
   BluetoothManager * btManager;
-  ChatClient * btClient;
   QString filename;
 
 public:
@@ -50,7 +49,7 @@ private slots:
 
 public slots:
   void updateDotSlot();
-  void btConnectionEstablished(ChatClient * client);
+  void btConnectionEstablished();
 };
 
 extern int maxTime;

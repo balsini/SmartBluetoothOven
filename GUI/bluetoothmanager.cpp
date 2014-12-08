@@ -11,7 +11,7 @@ BluetoothManager::BluetoothManager(QWidget *parent) :
 {
   ui->setupUi(this);
   MainWindow * mw = (MainWindow *)parent;
-  connect(this, SIGNAL(btConnectionEstablished(ChatClient*)), mw, SLOT(btConnectionEstablished(ChatClient*)));
+  connect(this, SIGNAL(btConnectionEstablished(ChatClient*)), mw, SLOT(btConnectionEstablished()));
 }
 
 BluetoothManager::~BluetoothManager()
@@ -57,7 +57,7 @@ void BluetoothManager::on_pushButton_2_clicked()
             this, SLOT(showMessage(QString,QString)));
     connect(client, SIGNAL(disconnected()), this, SLOT(clientDisconnected()));
     connect(client, SIGNAL(connected(QString)), this, SLOT(connected(QString)));
-    connect(this, SIGNAL(sendMessage(QString)), client, SLOT(sendMessage(QString)));
+    connect(this, SIGNAL(sentMessage(QString)), client, SLOT(sendMessage(QString)));
     qDebug() << "Start client";
     client->startClient(service);
 
