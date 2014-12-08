@@ -20,6 +20,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
   tempProfile = new TemperatureProfiler(ui->graphicsView);
   connect(tempProfile->getScene(), SIGNAL(newDotSignal()), this, SLOT(updateDotSlot()));
+
+  emit temperatureChanged(50);
 }
 
 MainWindow::~MainWindow()
