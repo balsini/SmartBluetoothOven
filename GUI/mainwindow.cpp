@@ -141,7 +141,10 @@ void MainWindow::anotherDotSelected(int n)
 
 void MainWindow::temperatureChanged(int t)
 {
-  dotList[ui->listDots->currentRow()].y(1.0 - (double)t / ui->dialTemperature->maximum());
+  if (dotList.count() > 0)
+    dotList[ui->listDots->currentRow()].y(1.0 - (double)t / ui->dialTemperature->maximum());
+  else
+    currentTemperature = t;
 
   tempProfile->getScene()->update();
 }

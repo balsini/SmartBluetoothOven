@@ -23,6 +23,7 @@ public:
 };
 
 extern QList<Dot> dotList;
+extern int currentTemperature;
 
 class MyScene : public QGraphicsScene
 {

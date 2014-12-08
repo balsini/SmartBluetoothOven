@@ -9,6 +9,7 @@
 #include "mainwindow.hpp"
 
 QList<Dot> dotList;
+int currentTemperature;
 
 /***********************
  *                     *
@@ -59,6 +60,9 @@ void MyScene::mousePressEvent(QGraphicsSceneMouseEvent * mouseEvent)
 void MyScene::update()
 {
   this->clear();
+
+  QPen linePen;
+  linePen.setWidth(2);
 
   if (dotList.count() >= 1) {
     // Reorder Dots from left to right
@@ -130,9 +134,6 @@ void MyScene::update()
     }
 
     // Draw lines
-    QPen linePen;
-    linePen.setWidth(2);
-
     addLine(((QWidget *)this->parent())->width() * 0,
             ((QWidget *)this->parent())->height() * 1,
             ((QWidget *)this->parent())->width() * dotList.at(0).x(),
@@ -147,7 +148,15 @@ void MyScene::update()
               linePen);
     }
   } else {
-    // Working as common oven
+
+    double val1 = 1.0 - (double)currentTemperature / maxTemp;
+    int y = ((QWidget *)this->parent())->height() * val1;
+
+    addLine(0,
+            y,
+            ((QWidget *)this->parent())->width(),
+            y,
+            linePen);
   }
 }
 
