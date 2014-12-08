@@ -11,16 +11,20 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = SmartBluetoothOven
 TEMPLATE = app
 
-
 SOURCES += main.cpp\
-        mainwindow.cpp \
+    mainwindow.cpp \
     temperatureprofiler.cpp \
-    bluetoothmanager.cpp
+    bluetoothmanager.cpp \
+    remoteselector.cpp \
+    chatclient.cpp
 
 HEADERS  += \
     temperatureprofiler.hpp \
     mainwindow.hpp \
-    bluetoothmanager.h
+    remoteselector.hpp \
+    bluetoothmanager.hpp \
+    chatclient.hpp
 
 FORMS    += mainwindow.ui \
-    bluetoothmanager.ui
+    bluetoothmanager.ui \
+    remoteselector.ui

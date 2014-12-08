@@ -7,7 +7,7 @@
 #include <QTime>
 
 #include "temperatureprofiler.hpp"
-#include "bluetoothmanager.h"
+#include "bluetoothmanager.hpp"
 
 namespace Ui {
 class MainWindow;
