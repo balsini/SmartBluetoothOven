@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui(new Ui::MainWindow)
 {
   btManager = 0;
+  cooking = false;
   ui->setupUi(this);
   this->setFixedHeight(this->height());
   this->setFixedWidth(this->width());
@@ -276,7 +277,10 @@ void MainWindow::on_actionConnection_triggered()
 void MainWindow::btConnectionEstablished()
 {
   qDebug() << "MainWindow::btConnectionEstablished";
-  btManager->sendMessage("PCConnected");
+
+  QByteArray m;
+  m.append('p');
+  btManager->sendMessage(m);
   ui->buttonStart->setEnabled(true);
 }
 
@@ -284,9 +288,19 @@ void MainWindow::btMessageReceived(QString sender, QString message)
 {
   qDebug() << "Received message from: " << sender;
   qDebug() << message;
+  if (cooking)
+    btManager->sendMessage("t,50");
 }
 
 void MainWindow::on_buttonStart_clicked()
 {
-  btManager->sendMessage("static,50");
+  btManager->sendMessage("s");
+  ui->buttonStart->setEnabled(false);
+  ui->buttonStop->setEnabled(true);
+  cooking = true;
+}
+
+void MainWindow::on_buttonStop_clicked()
+{
+  cooking = false;
 }

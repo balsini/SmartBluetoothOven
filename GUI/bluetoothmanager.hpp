@@ -37,8 +37,9 @@ private slots:
   void on_pushButton_3_clicked();
 
 public slots:
-  void sendMessage(QString str) {
-    client->sendMessage(str);
+  void sendMessage(QByteArray m) {
+    m.append('\n');
+    client->sendMessage(m);
   }
   void showMessage(QString sender, QString message);
 

@@ -93,9 +93,12 @@ void ChatClient::readSocket()
 //! [readSocket]
 
 //! [sendMessage]
-void ChatClient::sendMessage(const QString &message)
+void ChatClient::sendMessage(const QByteArray &m)
 {
-    QByteArray text = message.toUtf8() + '\n';
+    QByteArray text = m;
+    qDebug() << "Sending Message:";
+    for (unsigned int i=0; i<m.count(); i++)
+      qDebug() << m[i];
     socket->write(text);
 }
 //! [sendMessage]

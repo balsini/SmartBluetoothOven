@@ -62,7 +62,7 @@ public:
     void stopClient();
 
 public slots:
-    void sendMessage(const QString &message);
+    void sendMessage(const QByteArray &message);
 
 signals:
     void messageReceived(const QString &sender, const QString &message);

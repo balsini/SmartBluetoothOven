@@ -23,6 +23,8 @@ class MainWindow : public QMainWindow
   BluetoothManager * btManager;
   QString filename;
 
+  bool cooking;
+
 public:
   explicit MainWindow(QWidget *parent = 0);
   ~MainWindow();
@@ -48,6 +50,8 @@ private slots:
   void on_actionConnection_triggered();
 
   void on_buttonStart_clicked();
+
+  void on_buttonStop_clicked();
 
 public slots:
   void updateDotSlot();
