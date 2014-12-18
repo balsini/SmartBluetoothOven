@@ -22,7 +22,7 @@ class MainWindow : public QMainWindow
   TemperatureProfiler * tempProfile;
   BluetoothManager * btManager;
   QString filename;
-
+  QTime timer;
   bool cooking;
 
 public:

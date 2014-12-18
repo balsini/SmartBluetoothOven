@@ -6,7 +6,7 @@
 #include <QFile>
 #include <QFileDialog>
 
-int maxTime = 0;
+int maxTime = 900;
 int maxTemp = 270;
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -65,6 +65,8 @@ void MainWindow::timeChangedSpinbox(QTime t)
   ui->dialTime->setValue(t.hour()*60*60 +
                          t.minute()*60 +
                          t.second());
+  if (dotList.count() == 0)
+    maxTime = ui->dialTime->value();
 }
 
 void MainWindow::updateDotSlot()
@@ -288,8 +290,19 @@ void MainWindow::btMessageReceived(QString sender, QString message)
 {
   qDebug() << "Received message from: " << sender;
   qDebug() << message;
-  if (cooking)
-    btManager->sendMessage("t,50");
+
+  QString ovenTemperatureS = message.mid(2,3);
+  int ovenTemperature = ovenTemperatureS.toInt();
+
+  ui->lcdCurrent->display(ovenTemperature);
+
+  if (cooking) {
+    ui->horizontalSlider->setValue(timer.elapsed() / 10 / maxTime);
+
+    char buffer [50];
+    sprintf(buffer, "t,%003d",50);
+    btManager->sendMessage(buffer);
+  }
 }
 
 void MainWindow::on_buttonStart_clicked()
@@ -298,6 +311,9 @@ void MainWindow::on_buttonStart_clicked()
   ui->buttonStart->setEnabled(false);
   ui->buttonStop->setEnabled(true);
   cooking = true;
+
+  timer.start();
+  ui->horizontalSlider->setValue(0);
 }
 
 void MainWindow::on_buttonStop_clicked()

@@ -59,7 +59,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLCDNumber" name="lcdNumber"/>
+        <widget class="QLCDNumber" name="lcdCurrent"/>
        </item>
        <item>
         <widget class="QLabel" name="label_2">
@@ -69,7 +69,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLCDNumber" name="lcdNumber_2"/>
+        <widget class="QLCDNumber" name="lcdDesired"/>
        </item>
       </layout>
      </item>
@@ -417,8 +417,8 @@
    <slot>newDotSlot()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>101</x>
-     <y>302</y>
+     <x>102</x>
+     <y>73</y>
     </hint>
     <hint type="destinationlabel">
      <x>5</x>
@@ -503,6 +503,22 @@
     <hint type="destinationlabel">
      <x>284</x>
      <y>111</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>horizontalSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>progressBar</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>339</x>
+     <y>303</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>351</x>
+     <y>330</y>
     </hint>
    </hints>
   </connection>
