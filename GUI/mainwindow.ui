@@ -291,12 +291,6 @@
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
-   <widget class="QMenu" name="menu">
-    <property name="title">
-     <string>?</string>
-    </property>
-    <addaction name="actionAbout"/>
-   </widget>
    <widget class="QMenu" name="menuOven">
     <property name="title">
      <string>Oven</string>
@@ -305,7 +299,6 @@
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuOven"/>
-   <addaction name="menu"/>
   </widget>
   <action name="actionAbout">
    <property name="text">
