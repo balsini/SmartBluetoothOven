@@ -265,13 +265,28 @@ void MainWindow::on_actionOpen_triggered()
 
 void MainWindow::on_actionConnection_triggered()
 {
-  if (!btManager)
+  if (!btManager) {
     btManager = new BluetoothManager(this);
+    connect(btManager, SIGNAL(messageReceived(QString,QString)),
+            this, SLOT(btMessageReceived(QString,QString)));
+  }
   btManager->show();
 }
 
 void MainWindow::btConnectionEstablished()
 {
   qDebug() << "MainWindow::btConnectionEstablished";
-  btManager->sendMessage("PC Connected");
+  btManager->sendMessage("PCConnected");
+  ui->buttonStart->setEnabled(true);
+}
+
+void MainWindow::btMessageReceived(QString sender, QString message)
+{
+  qDebug() << "Received message from: " << sender;
+  qDebug() << message;
+}
+
+void MainWindow::on_buttonStart_clicked()
+{
+  btManager->sendMessage("static,50");
 }

@@ -47,9 +47,13 @@ private slots:
 
   void on_actionConnection_triggered();
 
+  void on_buttonStart_clicked();
+
 public slots:
   void updateDotSlot();
+
   void btConnectionEstablished();
+  void btMessageReceived(QString sender, QString message);
 };
 
 extern int maxTime;

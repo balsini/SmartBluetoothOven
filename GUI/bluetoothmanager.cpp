@@ -12,6 +12,7 @@ BluetoothManager::BluetoothManager(QWidget *parent) :
   ui->setupUi(this);
   MainWindow * mw = (MainWindow *)parent;
   connect(this, SIGNAL(btConnectionEstablished(ChatClient*)), mw, SLOT(btConnectionEstablished()));
+  on_pushButton_clicked();
 }
 
 BluetoothManager::~BluetoothManager()
@@ -21,7 +22,6 @@ BluetoothManager::~BluetoothManager()
 
 void BluetoothManager::on_pushButton_clicked()
 {
-
   ui->localDeviceComboBox->clear();
 
   QList<QBluetoothHostInfo> btList;
@@ -53,9 +53,8 @@ void BluetoothManager::on_pushButton_2_clicked()
 
     ui->remoteTargetLabel->setText(QString("Connecting to: \"%1\"...").arg(service.device().name()));
 
-    connect(client, SIGNAL(messageReceived(QString,QString)),
-            this, SLOT(showMessage(QString,QString)));
-    connect(client, SIGNAL(disconnected()), this, SLOT(clientDisconnected()));
+    connect(client, SIGNAL(messageReceived(QString,QString)), this, SLOT(showMessage(QString,QString)));
+    connect(client, SIGNAL(disconnected()), this, SLOT(disconnected()));
     connect(client, SIGNAL(connected(QString)), this, SLOT(connected(QString)));
     connect(this, SIGNAL(sentMessage(QString)), client, SLOT(sendMessage(QString)));
     qDebug() << "Start client";
@@ -77,4 +76,9 @@ void BluetoothManager::connected(QString str)
 {
   ui->remoteTargetLabel->setText("Connection established with: \"" + str + "\"");
   ui->pushButton_3->setEnabled(true);
+}
+
+void BluetoothManager::showMessage(QString sender, QString message)
+{
+  emit messageReceived(sender, message);
 }

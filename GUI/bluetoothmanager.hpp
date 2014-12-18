@@ -40,12 +40,13 @@ public slots:
   void sendMessage(QString str) {
     client->sendMessage(str);
   }
+  void showMessage(QString sender, QString message);
 
 signals:
   void btConnectionEstablished(ChatClient * client);
   void sentMessage(QString str);
   void clientDisconnected();
-  void showMessage(QString s1, QString s2);
+  void messageReceived(QString s1, QString s2);
 };
 
 #endif
