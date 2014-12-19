@@ -352,6 +352,8 @@ void MainWindow::btMessageReceived(QString sender, QString message)
     char buffer [50];
     sprintf(buffer, "t,%03d", dt);
     btManager->sendMessage(buffer);
+  } else {
+    btManager->sendMessage("d");
   }
 }
 
@@ -364,6 +366,7 @@ void MainWindow::on_buttonStart_clicked()
 
   timer.start();
   ui->horizontalSlider->setValue(0);
+  ui->horizontalSlider->setMinimum(1);
 }
 
 void MainWindow::on_buttonStop_clicked()
@@ -373,4 +376,5 @@ void MainWindow::on_buttonStop_clicked()
   ui->buttonStart->setEnabled(true);
   ui->buttonStop->setEnabled(false);
   dotListOven.clear();
+  ui->horizontalSlider->setMinimum(0);
 }
