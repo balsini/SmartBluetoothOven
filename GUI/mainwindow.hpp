@@ -25,6 +25,8 @@ class MainWindow : public QMainWindow
   QTime timer;
   bool cooking;
 
+  int desiredTemperature(int time);
+
 public:
   explicit MainWindow(QWidget *parent = 0);
   ~MainWindow();

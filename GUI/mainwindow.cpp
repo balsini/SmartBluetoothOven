@@ -49,13 +49,16 @@ void MainWindow::timeChangedDial(int i)
   } else if (ui->listDots->currentRow() == 0
              && ui->listDots->currentRow() < dotList.count() - 1 && dotList[ui->listDots->currentRow() + 1].x() * maxTime > i) {
     // Left dot
-    dotList[ui->listDots->currentRow()].x((double)i / maxTime );
+    dotList[ui->listDots->currentRow()].x((double)i / maxTime);
   } else if (dotList.count() > 1 && ui->listDots->currentRow() == dotList.count() - 1
              && dotList[ui->listDots->currentRow() - 1].x() * maxTime < i) {
     // Right dot
     dotList[ui->listDots->currentRow()].x((double)i / maxTime );
     maxTime = i;
   }
+
+  if (dotList.count() == 1)
+    maxTime = i;
 
   tempProfile->getScene()->update();
 }
@@ -286,6 +289,40 @@ void MainWindow::btConnectionEstablished()
   ui->buttonStart->setEnabled(true);
 }
 
+int MainWindow::desiredTemperature(int time)
+{
+  if (dotList.empty()) {
+    return ui->dialTemperature->value();
+  } else {
+    int i;
+
+    for (i=0; i<dotList.count(); ++i) {
+      if (dotList[i].x() * maxTime > time)
+        break;
+    }
+
+    if (i == dotList.count())
+      return (1.0 - dotList.last().y()) * maxTemp;
+
+    Dot rightDot = dotList[i];
+    Dot leftDot(0.0, 1.0);
+    if (i > 0)
+      leftDot = dotList[i-1];
+
+    double x_1, x_2, y_1, y_2;
+
+    x_1 = leftDot.x() * maxTime;
+    y_1 = (1.0 - leftDot.y()) * maxTemp;
+
+    x_2 = rightDot.x() * maxTime;
+    y_2 = (1.0 - rightDot.y()) * maxTemp;
+
+    int ret = (y_2 - y_1) / (x_2 - x_1) * ((double)time - x_1) + y_1;
+
+    return ret;
+  }
+}
+
 void MainWindow::btMessageReceived(QString sender, QString message)
 {
   qDebug() << "Received message from: " << sender;
@@ -294,18 +331,27 @@ void MainWindow::btMessageReceived(QString sender, QString message)
   QString ovenTemperatureS = message.mid(2,3);
   int ovenTemperature = ovenTemperatureS.toInt();
 
-
-
   if (cooking) {
-    ui->horizontalSlider->setValue(timer.elapsed() / 10 / maxTime);
-    ui->lcdCurrent->display(ovenTemperature);
-    dotListOven.append(Dot(timer.elapsed()/1000, 1.0-((double)ovenTemperature/maxTemp)));
+    int currentTime = timer.elapsed() / 1000;
 
-    char buffer [50];
-    sprintf(buffer, "t,%003d",50);
-    btManager->sendMessage(buffer);
+    ui->horizontalSlider->setValue(currentTime * 100 / maxTime);
+    ui->lcdCurrent->display(ovenTemperature);
+    dotListOven.append(Dot(currentTime, 1.0-((double)ovenTemperature/maxTemp)));
+
+    int dt = desiredTemperature(currentTime);
+
+    ui->lcdDesired->display(dt);
 
     tempProfile->getScene()->update();
+
+    if (currentTime > maxTime) {
+      btManager->sendMessage("d");
+      on_buttonStop_clicked();
+      return;
+    }
+    char buffer [50];
+    sprintf(buffer, "t,%03d", dt);
+    btManager->sendMessage(buffer);
   }
 }
 
@@ -323,4 +369,8 @@ void MainWindow::on_buttonStart_clicked()
 void MainWindow::on_buttonStop_clicked()
 {
   cooking = false;
+
+  ui->buttonStart->setEnabled(true);
+  ui->buttonStop->setEnabled(false);
+  dotListOven.clear();
 }
