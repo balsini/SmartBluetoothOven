@@ -294,14 +294,18 @@ void MainWindow::btMessageReceived(QString sender, QString message)
   QString ovenTemperatureS = message.mid(2,3);
   int ovenTemperature = ovenTemperatureS.toInt();
 
-  ui->lcdCurrent->display(ovenTemperature);
+
 
   if (cooking) {
     ui->horizontalSlider->setValue(timer.elapsed() / 10 / maxTime);
+    ui->lcdCurrent->display(ovenTemperature);
+    dotListOven.append(Dot(timer.elapsed()/1000, 1.0-((double)ovenTemperature/maxTemp)));
 
     char buffer [50];
     sprintf(buffer, "t,%003d",50);
     btManager->sendMessage(buffer);
+
+    tempProfile->getScene()->update();
   }
 }
 

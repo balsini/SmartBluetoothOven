@@ -9,6 +9,9 @@
 #include "mainwindow.hpp"
 
 QList<Dot> dotList;
+
+QList<Dot> dotListOven;
+
 int currentTemperature;
 
 /***********************
@@ -63,6 +66,22 @@ void MyScene::update()
 
   QPen linePen;
   linePen.setWidth(2);
+
+
+  QPen linePenOven;
+  linePenOven.setColor(Qt::green);
+  linePenOven.setWidth(3);
+
+  // Draw oven temperature history
+  if (dotListOven.count() > 2) {
+    for (int i=1; i<dotListOven.count(); i++) {
+      addLine(((QWidget *)this->parent())->width() * dotListOven.at(i).x() / maxTime,
+              ((QWidget *)this->parent())->height() * dotListOven.at(i).y(),
+              ((QWidget *)this->parent())->width() * dotListOven.at(i-1).x() / maxTime,
+              ((QWidget *)this->parent())->height() * dotListOven.at(i-1).y(),
+              linePenOven);
+    }
+  }
 
   if (dotList.count() >= 1) {
     // Reorder Dots from left to right
