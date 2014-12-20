@@ -8,6 +8,8 @@
 
 #include "mainwindow.hpp"
 
+#define QT_NO_DEBUG_OUTPUT
+
 QList<Dot> dotList;
 
 QList<Dot> dotListOven;

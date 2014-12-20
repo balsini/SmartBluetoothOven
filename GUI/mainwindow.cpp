@@ -134,6 +134,9 @@ void MainWindow::anotherDotSelected(int n)
 {
   static int lastDotSelected = 0;
 
+  if (n >= dotList.count())
+    return;
+
   if (n >= 0 && dotList.count() > 1) {
     if (lastDotSelected < dotList.count())
       dotList[lastDotSelected].selected(false);

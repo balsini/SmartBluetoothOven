@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>700</width>
+    <width>701</width>
     <height>378</height>
    </rect>
   </property>
@@ -37,14 +37,40 @@
     </property>
     <layout class="QVBoxLayout" name="verticalLayoutRight">
      <item>
-      <widget class="QLabel" name="labelTemperatureProfile">
-       <property name="text">
-        <string>Temperature Profile</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QLabel" name="labelTemperatureProfile">
+         <property name="text">
+          <string>Temperature Profile</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="onLED">
+         <property name="minimumSize">
+          <size>
+           <width>25</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>25</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: black</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item>
       <widget class="QGraphicsView" name="graphicsView"/>
@@ -277,7 +303,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>700</width>
+     <width>701</width>
      <height>20</height>
     </rect>
    </property>
