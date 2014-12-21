@@ -55,6 +55,8 @@ private slots:
 
   void on_buttonStop_clicked();
 
+  void on_actionExport_Temperature_triggered();
+
 public slots:
   void updateDotSlot();
 

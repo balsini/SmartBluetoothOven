@@ -355,8 +355,14 @@ void MainWindow::btMessageReceived(QString sender, QString message)
     char buffer [50];
     sprintf(buffer, "t,%03d", dt);
     btManager->sendMessage(buffer);
+
+    if (dt < ovenTemperature)
+      ui->onLED->setStyleSheet("background-color: black");
+    else
+      ui->onLED->setStyleSheet("background-color: red");
   } else {
     btManager->sendMessage("d");
+    ui->onLED->setStyleSheet("background-color: black");
   }
 }
 
@@ -370,6 +376,7 @@ void MainWindow::on_buttonStart_clicked()
   timer.start();
   ui->horizontalSlider->setValue(0);
   ui->horizontalSlider->setMinimum(1);
+  dotListOven.clear();
 }
 
 void MainWindow::on_buttonStop_clicked()
@@ -378,6 +385,42 @@ void MainWindow::on_buttonStop_clicked()
 
   ui->buttonStart->setEnabled(true);
   ui->buttonStop->setEnabled(false);
-  dotListOven.clear();
   ui->horizontalSlider->setMinimum(0);
+}
+
+void MainWindow::on_actionExport_Temperature_triggered()
+{
+  QString filename = QFileDialog::getSaveFileName(
+        this,
+        tr("Save File"),
+        "./",
+        "Comma-Separated Values (*.csv)"
+        );
+
+  if (filename.length() == 0)
+    return;
+
+  filename.append(".csv");
+
+  QFile openFile(filename);
+  if (openFile.open(QIODevice::WriteOnly)) {
+
+    qDebug() << "Writing to file: " << filename;
+
+    openFile.write("Time;Temperature\n");
+
+    for (int i=0; i<dotListOven.count(); ++i) {
+      QString row = "";
+      row.append(QString::number(dotListOven[i].x()) + ";");
+      row.append(QString::number((1.0 - dotListOven[i].y()) * ui->dialTemperature->maximum()) + "\n");
+
+      openFile.write(row.toStdString().c_str());
+    }
+
+    updateTitle();
+    openFile.close();
+
+  } else {
+    qDebug() << "Error while opening file";
+  }
 }

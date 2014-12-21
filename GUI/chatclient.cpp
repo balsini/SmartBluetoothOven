@@ -97,7 +97,7 @@ void ChatClient::sendMessage(const QByteArray &m)
 {
     QByteArray text = m;
     qDebug() << "Sending Message:";
-    for (unsigned int i=0; i<m.count(); i++)
+    for (int i=0; i<m.count(); i++)
       qDebug() << m[i];
     socket->write(text);
 }
